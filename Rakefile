@@ -2,9 +2,18 @@
 # for example lib/tasks/capistrano.rake, and they will automatically be available to Rake.
 
 require_relative "config/application"
-require "rubocop/rake_task"
+
+if %w([development test]).include? Rails.env
+  require "rubocop/rake_task"
+end
 
 Rails.application.load_tasks
-RuboCop::RakeTask.new
 
-task default: %i[spec brakeman rubocop]
+tasks = %i[spec brakeman]
+
+if %w([development test]).include? Rails.env
+  RuboCop::RakeTask.new
+  tasks = %i[spec brakeman rubocop]
+end
+
+task default: tasks
