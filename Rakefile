@@ -9,7 +9,7 @@ end
 
 Rails.application.load_tasks
 
-tasks = %i[spec brakeman]
+tasks = %i[spec brakeman rubocop]
 
 if %w([development test]).include? Rails.env
   RuboCop::RakeTask.new
